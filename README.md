@@ -12,7 +12,7 @@ First, we collected diabetic patient data from 130 hospitals over a ten year spa
 
 # Exploratory Analysis and Dimensionality Reduction
 
-However, at this point our data was still pretty sparse, in part because the primary and secondary diagnoses that were included for each of our patients consisted of countless diseases that was going to make it difficult to reduce the sparsity. In order to deal with this element of our data, my partner and I scraped IDC-10 codes and the corresponding category of disease, and used this to simplify each individuals primary and secondary ailments to one category of disease. 
+However, at this point our data was still pretty sparse, in part because the primary and secondary diagnoses that were included for each of our patients consisted of countless diseases that was going to make it difficult to reduce the sparsity. In order to deal with this element of our data, we scraped IDC-10 codes and the corresponding category of disease, and used this to simplify each individuals primary and secondary ailments to one category of disease. 
 Following this we ran Principal Component Analysis on our scaled continuous variables in order to reduce dimensionality even further. We were left with 6 principal components, with our cutoff meaning each component explains at least .075 of the observed variance. 
 
 Unsurprisingly, as is often the case with medical classification datasets we were left with a class imbalance. Where our readmitted patients accounted for only 11% of our dataset. However, because of our enormous dataset we had no need to create sythetic data we just undersampled the class of individuals who were not readmitted. And used a limited dataset of 10,625 samples. Still plenty large enough to conduct the classification algorithm that we had in mind. 
@@ -24,6 +24,10 @@ Following Logistic Regression we ran a number of other classification models, in
 
 # Conclusion
 
-This was not the most ideal score but given the predictors that we had at our disposal it proved to be a decent success with respect to the objective that we were classifying. 
+This was not the most ideal score but there were a number of factors that we needed to consider when evaluating our results. Primarily, the dataset we used initially provided us with three target variables, "Not Readmitted", "Readmission <30 days", and "Readmission >30 days". For the purpose of our project, which wanted to address the fact that only a patient readmitted within 30 days is not covered by insurance, we grouped everyone who was not readmitted within 30 days into one group. In hingsight, it might have made our model more accurate if we kept this as a multiclass classification problem.
+
+The second issue was the lack of external information we could gather with regard to our original dataset. Unsurprisngly, this is a problem that is more common with healthcare data, due to the anonymity of individuals medical records. However, we were still able to focus on the diseases and reduce dimensionality by grouping our diagnoses based on their ICD codes, which proved to be one of our stronger predictors.
+
+In all, we were not too dissapointed with our results for the reasons I listed above, but also because of the problem that we are looking to address. By training and validating a model that had a recall score of .63 we can already account for a large number of patients that are at risk for being readmitted, and take the necessary steps to subvert this problem. As for the individuals that we missclassified as our target, perhaps we can assume these individuals were eventually readmitted after 30 days or simply place consider them high-risk patients upon release and conduct follow-ups to ensure their progress. All things considered my partner believed this model was a marginal success with respect to the objective that we were classifying. And we believe that there is plenty of work that should be done in this field to further examine the factors that result in a patients rate of acute care admissions. 
 
 
